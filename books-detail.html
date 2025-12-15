@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programming Books Set - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="public/index.html">Home</a></li>
+        <li><a href="public/profile.html">Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="item-detail-container">
+    <div class="item-images">
+      <div class="thumbnail-column">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400" alt="Books stack" class="small">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400" alt="Programming book" class="small">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400" alt="Code book" class="small">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400" alt="Tech books" class="small">
+      </div>
+    </div>
+
+    <div class="item-info">
+      <h2>Programming Books Set</h2>
+      <p><strong>Category:</strong> Books</p>
+      <p><strong>Description:</strong> Collection of 5 programming books including JavaScript, Python, and React. Perfect for learning web development.</p>
+      <p><strong>Price:</strong> $75</p>
+
+      <div class="actions">
+        <button onclick="buyNow()" class="buy-btn">Buy Now</button>
+        <button onclick="proposeSwap()" class="swap-btn">Propose Swap</button>
+        <button onclick="contactSeller()" class="contact-btn">Contact Seller</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleImageSize(img) {
+      if (img.classList.contains('small')) {
+        document.querySelectorAll('.thumbnail-column img').forEach(image => {
+          image.classList.remove('large');
+          image.classList.add('small');
+        });
+        img.classList.remove('small');
+        img.classList.add('large');
+      } else {
+        img.classList.remove('large');
+        img.classList.add('small');
+      }
+    }
+
+    function buyNow() {
+      window.location.href = 'payment.html?item=Programming Books Set';
+    }
+
+    function proposeSwap() {
+      window.location.href = 'swap-proposal.html';
+    }
+
+    function contactSeller() {
+      window.location.href = 'contact-seller.html';
+    }
+  </script>
+</body>
+</html>

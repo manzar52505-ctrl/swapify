@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swap Proposal - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="itemdetail.html">Back to Item</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="swap-container">
+    <div class="swap-header">
+      <h2>🔄 Let's Make a Swap!</h2>
+      <p>Turn your unused items into something you actually want</p>
+    </div>
+    
+    <div class="swap-form">
+      <div class="swap-items">
+        <div class="item-card want-card-new">
+          <div class="want-header">
+            <span class="want-emoji">😍</span>
+            <h3>You Really Want This!</h3>
+          </div>
+          <div class="featured-item">
+            <div class="item-badge">Featured Item</div>
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200&h=150&fit=crop" alt="Target Item">
+            <div class="item-overlay">
+              <h4 id="targetItem">Old Laptop</h4>
+              <div class="price-tag">$120</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="swap-arrow">
+          <div class="arrow-circle">⇄</div>
+          <p>Fair Trade</p>
+        </div>
+        
+        <div class="item-card offer-card-new">
+          <div class="offer-header">
+            <span class="offer-icon">🎁</span>
+            <h3>Your Amazing Offer</h3>
+            <p>Show them what you've got!</p>
+          </div>
+          <div class="offer-steps">
+            <div class="step">
+              <span class="step-number">1</span>
+              <input type="text" id="yourItem" placeholder="What's your treasure?" required>
+            </div>
+            <div class="step">
+              <span class="step-number">2</span>
+              <input type="text" id="yourItemValue" placeholder="What's it worth?" required>
+            </div>
+            <div class="step">
+              <span class="step-number">3</span>
+              <textarea id="swapMessage" placeholder="Convince them! Why is this swap perfect?" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="swap-benefits">
+        <div class="benefit">
+          <span class="benefit-icon">🌱</span>
+          <p>Eco-Friendly</p>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon">💰</span>
+          <p>Save Money</p>
+        </div>
+        <div class="benefit">
+          <span class="benefit-icon">🤝</span>
+          <p>Help Others</p>
+        </div>
+      </div>
+      
+      <button onclick="submitSwap()" class="swap-btn-enhanced">🚀 Send My Swap Proposal</button>
+    </div>
+  </section>
+
+  <script>
+    function submitSwap() {
+      const yourItem = document.getElementById('yourItem').value;
+      const yourValue = document.getElementById('yourItemValue').value;
+      const message = document.getElementById('swapMessage').value;
+      
+      if (yourItem && yourValue) {
+        alert(`Swap proposal sent!\nYour ${yourItem} (${yourValue}) for Old Laptop`);
+        window.location.href = 'swap-success.html';
+      } else {
+        alert('Please fill in all required fields');
+      }
+    }
+  </script>
+</body>
+</html>

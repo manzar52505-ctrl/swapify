@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Item - Swap&Shop</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="additem.html">Add Item</a></li>
+        <li><a href="../profile-select.html">Profile</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Add Item Form -->
+  <section class="add-item-container">
+    <h2>Add New Item</h2>
+    <form>
+      <label>Item Name</label>
+      <input type="text" placeholder="Enter item name" required>
+
+      <label>Description</label>
+      <textarea placeholder="Enter description" required></textarea>
+
+      <label>Category</label>
+      <select required>
+        <option value="">Select category</option>
+        <option>Electronics</option>
+        <option>Clothes</option>
+        <option>Books</option>
+        <option>Other</option>
+      </select>
+
+      <label>Price (optional)</label>
+      <input type="number" placeholder="Enter price">
+
+      <label>Upload Photo</label>
+      <input type="file" accept="image/*">
+
+      <button type="submit">Add Item</button>
+    </form>
+  </section>
+  
+  <script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const itemName = document.querySelector('input[type="text"]').value;
+      const description = document.querySelector('textarea').value;
+      const category = document.querySelector('select').value;
+      const price = document.querySelector('input[type="number"]').value;
+      
+      if (itemName && description && category) {
+        alert(`Item "${itemName}" added successfully!`);
+        window.location.href = 'index.html';
+      } else {
+        alert('Please fill in all required fields.');
+      }
+    });
+  </script>
+
+</body>
+</html>
+

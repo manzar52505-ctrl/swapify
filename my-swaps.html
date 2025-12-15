@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Swaps - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="my-orders.html">My Orders</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="swaps-container">
+    <h2>My Swap Proposals</h2>
+    <div class="swaps-list">
+      <div class="swap-card">
+        <div class="swap-header">
+          <h3>Swap Proposal #001</h3>
+          <span class="badge badge-warning">Pending</span>
+        </div>
+        <div class="swap-details">
+          <p><strong>You offered:</strong> Gaming Keyboard</p>
+          <p><strong>For:</strong> Old Laptop</p>
+          <p><strong>Date:</strong> Dec 15, 2024</p>
+        </div>
+        <button onclick="viewSwapDetails('001')" class="swap-btn">View Details</button>
+      </div>
+      
+      <div class="swap-card">
+        <div class="swap-header">
+          <h3>Swap Proposal #002</h3>
+          <span class="badge badge-success">Accepted</span>
+        </div>
+        <div class="swap-details">
+          <p><strong>You offered:</strong> Headphones</p>
+          <p><strong>For:</strong> Smartphone</p>
+          <p><strong>Date:</strong> Dec 10, 2024</p>
+        </div>
+        <button onclick="completeSwap('002')" class="buy-btn">Complete Swap</button>
+      </div>
+    </div>
+  </section>
+  <script>
+    function viewSwapDetails(swapId) {
+      window.location.href = 'swap-details.html?swap=' + swapId;
+    }
+    
+    function completeSwap(swapId) {
+      if (confirm('Are you ready to complete this swap? This action cannot be undone.')) {
+        window.location.href = 'complete-swap.html?swap=' + swapId;
+      }
+    }
+  </script>
+</body>
+</html>

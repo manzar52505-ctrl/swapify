@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Order - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="public/index.html">Home</a></li>
+        <li><a href="my-orders.html">My Orders</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="tracking-container">
+    <h2>Order Tracking</h2>
+    <div class="tracking-card">
+      <div class="order-info">
+        <h3 id="orderNumber">Order #12345</h3>
+        <p><strong>Item:</strong> <span id="orderItem">Old Laptop</span></p>
+        <p><strong>Status:</strong> <span id="orderStatus" class="badge badge-warning">Shipping</span></p>
+        <p><strong>Estimated Delivery:</strong> <span id="deliveryDate">Dec 18, 2024</span></p>
+      </div>
+      
+      <div class="tracking-progress">
+        <div class="progress-step completed">
+          <div class="step-icon">✓</div>
+          <div class="step-info">
+            <h4>Order Confirmed</h4>
+            <p>Dec 15, 2024 - 10:30 AM</p>
+          </div>
+        </div>
+        
+        <div class="progress-step completed">
+          <div class="step-icon">✓</div>
+          <div class="step-info">
+            <h4>Order Packed</h4>
+            <p>Dec 16, 2024 - 2:15 PM</p>
+          </div>
+        </div>
+        
+        <div class="progress-step active">
+          <div class="step-icon">🚚</div>
+          <div class="step-info">
+            <h4>In Transit</h4>
+            <p>Dec 17, 2024 - 9:00 AM</p>
+          </div>
+        </div>
+        
+        <div class="progress-step">
+          <div class="step-icon">📦</div>
+          <div class="step-info">
+            <h4>Delivered</h4>
+            <p>Expected: Dec 18, 2024</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tracking-actions">
+        <button onclick="window.location.href='my-orders.html'" class="contact-btn">Back to Orders</button>
+        <button onclick="contactSupport()" class="swap-btn">Contact Support</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function contactSupport() {
+      const orderId = document.getElementById('orderNumber').innerText.replace('Order #', '');
+      window.location.href = 'contact-support.html?order=' + orderId;
+    }
+    
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('order');
+      if (orderId) {
+        document.getElementById('orderNumber').innerText = 'Order #' + orderId;
+      }
+    }
+  </script>
+</body>
+</html>

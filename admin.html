@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Panel - Swap & Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-container { max-width: 1200px; margin: 2rem auto; padding: 0 2rem; }
+    .admin-header { background: rgba(255, 255, 255, 0.95); padding: 2rem; border-radius: 20px; margin-bottom: 2rem; text-align: center; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: rgba(255, 255, 255, 0.95); padding: 1.5rem; border-radius: 15px; text-align: center; }
+    .stat-number { font-size: 2rem; font-weight: 700; color: #667eea; }
+    .admin-table { background: rgba(255, 255, 255, 0.95); border-radius: 20px; padding: 2rem; overflow-x: auto; margin-bottom: 2rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+    th { background: #f8fafc; font-weight: 600; }
+    .delete-btn { background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <div class="admin-header">
+      <h1>Admin Panel</h1>
+      <p>Manage all items and swaps</p>
+    </div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" id="totalItems">0</div>
+        <div>Total Items</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="totalSwaps">0</div>
+        <div>Total Swaps</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="activeItems">0</div>
+        <div>Active Items</div>
+      </div>
+    </div>
+    
+    <div class="admin-table">
+      <h3>All Items</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Owner</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="itemsTable"></tbody>
+      </table>
+    </div>
+    
+    <div class="admin-table">
+      <h3>All Swaps</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Proposer</th>
+            <th>Offered Item</th>
+            <th>Requested Item</th>
+            <th>Status</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="swapsTable"></tbody>
+      </table>
+    </div>
+  </div>
+  
+  <script>
+    const API_BASE = 'http://localhost:3000/api';
+    
+    async function loadAdminData() {
+      try {
+        const [itemsRes, swapsRes] = await Promise.all([
+          fetch(`${API_BASE}/items`),
+          fetch(`${API_BASE}/swaps`)
+        ]);
+        
+        const items = await itemsRes.json();
+        const swaps = await swapsRes.json();
+        
+        document.getElementById('totalItems').textContent = items.length;
+        document.getElementById('totalSwaps').textContent = swaps.length;
+        document.getElementById('activeItems').textContent = items.filter(i => i.status === 'Available').length;
+        
+        const itemsTable = document.getElementById('itemsTable');
+        itemsTable.innerHTML = items.map(item => `
+          <tr>
+            <td>${item.id}</td>
+            <td>${item.name}</td>
+            <td>$${item.price}</td>
+            <td>${item.owner}</td>
+            <td>${item.status}</td>
+            <td>${new Date(item.createdAt).toLocaleDateString()}</td>
+            <td><button class="delete-btn" onclick="deleteItem('${item.id}')">Delete</button></td>
+          </tr>
+        `).join('');
+        
+        const swapsTable = document.getElementById('swapsTable');
+        swapsTable.innerHTML = swaps.map(swap => `
+          <tr>
+            <td>${swap.id}</td>
+            <td>${swap.proposer}</td>
+            <td>${swap.itemOffered}</td>
+            <td>${swap.requestedItem}</td>
+            <td>${swap.status}</td>
+            <td>${new Date(swap.createdAt).toLocaleDateString()}</td>
+          </tr>
+        `).join('');
+      } catch (error) {
+        console.log('Using local data');
+        const items = JSON.parse(localStorage.getItem('items')) || [];
+        const swaps = JSON.parse(localStorage.getItem('swaps')) || [];
+        
+        document.getElementById('totalItems').textContent = items.length;
+        document.getElementById('totalSwaps').textContent = swaps.length;
+        document.getElementById('activeItems').textContent = items.filter(i => i.status === 'Available').length;
+      }
+    }
+    
+    async function deleteItem(id) {
+      try {
+        await fetch(`${API_BASE}/items/${id}`, { method: 'DELETE' });
+        loadAdminData();
+      } catch (error) {
+        console.log('Delete failed');
+      }
+    }
+    
+    loadAdminData();
+    setInterval(loadAdminData, 5000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complete Swap - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="public/index.html">Home</a></li>
+        <li><a href="my-swaps.html">My Swaps</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="complete-swap-container">
+    <h2>Complete Your Swap</h2>
+    <div class="complete-swap-card">
+      <div class="swap-final">
+        <h3 id="swapId">Swap #002</h3>
+        <div class="final-items">
+          <div class="final-item">
+            <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=100&h=100&fit=crop" alt="Your Item">
+            <p>Your Headphones</p>
+          </div>
+          <span class="final-arrow">⇄</span>
+          <div class="final-item">
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=100&h=100&fit=crop" alt="Their Item">
+            <p>Their Smartphone</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="completion-form">
+        <h4>Shipping Information</h4>
+        <form onsubmit="finalizeSwap(event)">
+          <input type="text" placeholder="Your Full Name" required>
+          <input type="text" placeholder="Your Address" required>
+          <input type="text" placeholder="City, State, ZIP" required>
+          <input type="tel" placeholder="Phone Number" required>
+          
+          <div class="agreement">
+            <label>
+              <input type="checkbox" required>
+              I confirm my item is in the described condition and ready to ship
+            </label>
+          </div>
+          
+          <button type="submit" class="buy-btn">Finalize Swap</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function finalizeSwap(event) {
+      event.preventDefault();
+      alert('Swap completed! Shipping labels will be sent to both parties.');
+      window.location.href = 'swap-completed.html';
+    }
+    
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const swapId = params.get('swap');
+      if (swapId) {
+        document.getElementById('swapId').innerText = 'Swap #' + swapId;
+      }
+    }
+  </script>
+</body>
+</html>

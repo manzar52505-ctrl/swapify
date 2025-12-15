@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="public/index.html">Home</a></li>
+        <li><a href="#" class="active">Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="profile-select-container">
+    <div class="profile-select-card">
+      <h2>👋 Welcome to Swap&Shop</h2>
+      <p>Please choose how you'd like to continue</p>
+      
+      <div class="auth-options">
+        <div class="auth-section">
+          <h3>New User?</h3>
+          <div class="user-type-buttons">
+            <button onclick="signupAs('customer')" class="user-btn customer-btn">
+              <span class="user-icon">🛒</span>
+              <h4>Sign Up as Customer</h4>
+              <p>Buy and swap items</p>
+            </button>
+            
+            <button onclick="signupAs('shopkeeper')" class="user-btn shopkeeper-btn">
+              <span class="user-icon">🏪</span>
+              <h4>Sign Up as Shopkeeper</h4>
+              <p>Sell and manage items</p>
+            </button>
+          </div>
+        </div>
+        
+        <div class="divider">OR</div>
+        
+        <div class="auth-section">
+          <h3>Already have an account?</h3>
+          <button onclick="showLogin()" class="login-btn">
+            <span class="user-icon">🔑</span>
+            Login to Your Account
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function signupAs(userType) {
+      localStorage.setItem('userType', userType);
+      window.location.href = 'public/signup.html?type=' + userType;
+    }
+    
+    function showLogin() {
+      window.location.href = 'public/login.html';
+    }
+  </script>
+</body>
+</html>

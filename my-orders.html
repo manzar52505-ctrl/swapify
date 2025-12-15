@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Orders - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="my-swaps.html">My Swaps</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="orders-container">
+    <h2>My Orders</h2>
+    <div class="orders-list">
+      <div class="order-card">
+        <div class="order-header">
+          <h3>Order #12345</h3>
+          <span class="badge badge-success">Delivered</span>
+        </div>
+        <p><strong>Item:</strong> Old Laptop</p>
+        <p><strong>Price:</strong> $120</p>
+        <p><strong>Date:</strong> Dec 15, 2024</p>
+        <button onclick="trackOrder('12345')" class="contact-btn">Track Order</button>
+      </div>
+      
+      <div class="order-card">
+        <div class="order-header">
+          <h3>Order #12344</h3>
+          <span class="badge badge-warning">Shipping</span>
+        </div>
+        <p><strong>Item:</strong> Gaming Mouse</p>
+        <p><strong>Price:</strong> $45</p>
+        <p><strong>Date:</strong> Dec 12, 2024</p>
+        <button onclick="trackOrder('12344')" class="contact-btn">Track Order</button>
+      </div>
+    </div>
+  </section>
+  <script>
+    function trackOrder(orderId) {
+      window.location.href = 'track-order.html?order=' + orderId;
+    }
+  </script>
+</body>
+</html>

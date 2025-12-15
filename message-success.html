@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message Sent - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="messages.html">My Messages</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="success-container">
+    <div class="success-card">
+      <h2>📧 Message Sent!</h2>
+      <p>Your message has been sent to the seller.</p>
+      <p>They will respond to your email address.</p>
+      <div class="success-actions">
+        <button onclick="window.location.href='public/index.html'" class="contact-btn">Continue Browsing</button>
+        <button onclick="viewMessages()" class="swap-btn">View Messages</button>
+      </div>
+    </div>
+  </section>
+  <script>
+    function viewMessages() {
+      window.location.href = 'public/messages.html';
+    }
+  </script>
+</body>
+</html>

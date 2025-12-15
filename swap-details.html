@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Swap Details - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="public/index.html">Home</a></li>
+        <li><a href="my-swaps.html">My Swaps</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="swap-detail-container">
+    <h2>Swap Proposal Details</h2>
+    <div class="swap-detail-card">
+      <div class="swap-status">
+        <h3 id="swapId">Swap Proposal #001</h3>
+        <span class="badge badge-warning">Pending</span>
+      </div>
+      
+      <div class="swap-comparison">
+        <div class="swap-item">
+          <h4>You Offered</h4>
+          <div class="item-info">
+            <img src="https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=150&h=150&fit=crop" alt="Your Item">
+            <div>
+              <p><strong>Gaming Keyboard</strong></p>
+              <p>Value: $80</p>
+              <p>Condition: Excellent</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="swap-arrow-detail">⇄</div>
+        
+        <div class="swap-item">
+          <h4>You Want</h4>
+          <div class="item-info">
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=150&h=150&fit=crop" alt="Target Item">
+            <div>
+              <p><strong>Old Laptop</strong></p>
+              <p>Value: $120</p>
+              <p>Condition: Good</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="swap-message">
+        <h4>Your Message</h4>
+        <p>"This gaming keyboard is in excellent condition with RGB lighting. Perfect for productivity and gaming. Would love to trade for your laptop!"</p>
+      </div>
+      
+      <div class="swap-actions">
+        <button onclick="window.location.href='my-swaps.html'" class="contact-btn">Back to Swaps</button>
+        <button onclick="cancelSwap()" class="swap-btn">Cancel Proposal</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function cancelSwap() {
+      if (confirm('Are you sure you want to cancel this swap proposal?')) {
+        alert('Swap proposal cancelled.');
+        window.location.href = 'my-swaps.html';
+      }
+    }
+    
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const swapId = params.get('swap');
+      if (swapId) {
+        document.getElementById('swapId').innerText = 'Swap Proposal #' + swapId;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vintage Leather Jacket - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="public/index.html">Home</a></li>
+        <li><a href="public/profile.html">Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="item-detail-container">
+    <div class="item-images">
+      <div class="thumbnail-column">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400" alt="Jacket front" class="small">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400" alt="Jacket back" class="small">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1520975954732-35dd22299614?w=400" alt="Jacket detail" class="small">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400" alt="Jacket worn" class="small">
+      </div>
+    </div>
+
+    <div class="item-info">
+      <h2>Vintage Leather Jacket</h2>
+      <p><strong>Category:</strong> Clothes</p>
+      <p><strong>Description:</strong> Classic brown leather jacket, perfect for any season. Size M. Genuine leather with vintage styling.</p>
+      <p><strong>Price:</strong> $150</p>
+
+      <div class="actions">
+        <button onclick="buyNow()" class="buy-btn">Buy Now</button>
+        <button onclick="proposeSwap()" class="swap-btn">Propose Swap</button>
+        <button onclick="contactSeller()" class="contact-btn">Contact Seller</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleImageSize(img) {
+      if (img.classList.contains('small')) {
+        document.querySelectorAll('.thumbnail-column img').forEach(image => {
+          image.classList.remove('large');
+          image.classList.add('small');
+        });
+        img.classList.remove('small');
+        img.classList.add('large');
+      } else {
+        img.classList.remove('large');
+        img.classList.add('small');
+      }
+    }
+
+    function buyNow() {
+      window.location.href = 'payment.html?item=Vintage Leather Jacket';
+    }
+
+    function proposeSwap() {
+      window.location.href = 'swap-proposal.html';
+    }
+
+    function contactSeller() {
+      window.location.href = 'contact-seller.html';
+    }
+  </script>
+</body>
+</html>

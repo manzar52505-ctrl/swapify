@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Seller - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="itemdetail.html">Back to Item</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="contact-container">
+    <h2>Contact Seller</h2>
+    <div class="contact-form">
+      <div class="item-info">
+        <h3>About: <span id="itemName">Old Laptop</span></h3>
+        <p>Send a message to the seller</p>
+      </div>
+      
+      <form onsubmit="sendMessage(event)">
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <input type="text" placeholder="Subject" required>
+        <textarea placeholder="Your message to the seller..." rows="5" required></textarea>
+        <button type="submit" class="contact-btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    function sendMessage(event) {
+      event.preventDefault();
+      alert('Message sent to seller successfully!');
+      window.location.href = 'message-success.html';
+    }
+  </script>
+</body>
+</html>

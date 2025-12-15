@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - Swap&Shop</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="profile.html" class="active">Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="user-profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar">👤</div>
+      <div class="profile-info">
+        <h2>John Doe</h2>
+        <p>Customer • Member since 2024</p>
+      </div>
+    </div>
+    
+    <div class="profile-tabs">
+      <div class="tab active" onclick="showTab('items')">My Items</div>
+      <div class="tab" onclick="showTab('orders')">My Orders</div>
+      <div class="tab" onclick="showTab('swaps')">My Swaps</div>
+    </div>
+    
+    <div class="tab-content">
+      <div id="items-tab" class="tab-panel active">
+        <h3>Your Listed Items</h3>
+        <div class="items-grid">
+          <div class="profile-item-card">
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=150&h=150&fit=crop" alt="Item">
+            <h4>Old Laptop</h4>
+            <p>$120</p>
+            <span class="status available">Available</span>
+          </div>
+        </div>
+      </div>
+      
+      <div id="orders-tab" class="tab-panel">
+        <h3>Your Orders</h3>
+        <div class="order-item">
+          <p><strong>Gaming Mouse</strong> - $45</p>
+          <span class="status shipped">Shipped</span>
+        </div>
+      </div>
+      
+      <div id="swaps-tab" class="tab-panel">
+        <h3>Your Swaps</h3>
+        <div class="swap-item">
+          <p><strong>Your:</strong> Gaming Keyboard → <strong>For:</strong> Smartphone</p>
+          <span class="status pending">Pending</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function showTab(tabName) {
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+      
+      event.target.classList.add('active');
+      document.getElementById(tabName + '-tab').classList.add('active');
+    }
+  </script>
+</body>
+</html>

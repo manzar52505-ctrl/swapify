@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer Profile - Swap & Shop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="customer-styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-row">
+      <div class="brand">
+        <div class="logo-circle">P</div>
+        <div class="brand-text">
+          <h1>Customer Profile</h1>
+          <small>View seller details</small>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <a href="index.html" class="btn">Home</a>
+        <a href="profile.html" class="btn">My Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main-area">
+    <div class="customer-profile">
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <div class="avatar-circle" id="customerAvatar">U</div>
+        </div>
+        <div class="profile-info">
+          <h2 id="customerName">Customer Name</h2>
+          <p id="customerEmail">customer@email.com</p>
+          <p id="customerContact">+1234567890</p>
+          <div class="profile-stats">
+            <div class="stat">
+              <span id="itemCount">0</span>
+              <small>Items Listed</small>
+            </div>
+            <div class="stat">
+              <span id="swapCount">0</span>
+              <small>Swaps Made</small>
+            </div>
+            <div class="stat">
+              <span id="rating">5.0</span>
+              <small>Rating</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section class="customer-items">
+        <h3>Items by this seller</h3>
+        <div id="customerItemsGrid" class="card-grid"></div>
+      </section>
+
+      <section class="contact-seller">
+        <h3>Contact Seller</h3>
+        <div class="contact-form">
+          <textarea id="messageText" placeholder="Send a message to this seller..."></textarea>
+          <button class="btn btn-primary" onclick="sendMessage()">Send Message</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function getCustomerFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('customer');
+    }
+
+    function loadCustomerProfile() {
+      const customerName = getCustomerFromURL();
+      if (!customerName) {
+        document.body.innerHTML = '<div style="text-align:center;padding:3rem;color:white;"><h2>Customer not found</h2><a href="index.html" class="btn btn-primary">Go Home</a></div>';
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const items = JSON.parse(localStorage.getItem('items')) || [];
+      const swaps = JSON.parse(localStorage.getItem('swaps')) || [];
+
+      const customer = users.find(u => u.username === customerName) || {
+        username: customerName,
+        email: `${customerName.toLowerCase()}@example.com`,
+        contact: '+1234567890'
+      };
+
+      // Update profile info
+      document.getElementById('customerName').textContent = customer.username;
+      document.getElementById('customerEmail').textContent = customer.email;
+      document.getElementById('customerContact').textContent = customer.contact;
+      document.getElementById('customerAvatar').textContent = customer.username.charAt(0).toUpperCase();
+
+      // Load customer items
+      const customerItems = items.filter(item => item.owner === customerName);
+      document.getElementById('itemCount').textContent = customerItems.length;
+      
+      // Load swap count
+      const customerSwaps = swaps.filter(swap => swap.proposer === customerName);
+      document.getElementById('swapCount').textContent = customerSwaps.length;
+
+      // Display items
+      const grid = document.getElementById('customerItemsGrid');
+      if (customerItems.length === 0) {
+        grid.innerHTML = '<p style="color: white; text-align: center;">This seller has no items listed.</p>';
+      } else {
+        grid.innerHTML = customerItems.map(item => `
+          <div class="item-card">
+            <img src="${item.image}" alt="${item.name}" class="item-image" onerror="this.src='https://via.placeholder.com/400x200?text=No+Image'">
+            <div class="item-content">
+              <h4 class="item-title">${item.name}</h4>
+              <div class="item-price">$${item.price}</div>
+              <p class="item-description">${item.description}</p>
+              <div class="item-actions">
+                <button class="btn btn-primary btn-sm" onclick="viewItem(${item.id})">View Details</button>
+                <button class="btn btn-outline btn-sm" onclick="proposeSwap(${item.id})">Propose Swap</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    function sendMessage() {
+      const messageText = document.getElementById('messageText').value.trim();
+      const customerName = getCustomerFromURL();
+      const currentUser = localStorage.getItem('currentUser') || 'GuestUser';
+
+      if (!messageText) {
+        alert('Please enter a message');
+        return;
+      }
+
+      const messages = JSON.parse(localStorage.getItem('messages')) || [];
+      const newMessage = {
+        id: Date.now(),
+        sender: currentUser,
+        receiver: customerName,
+        message: messageText,
+        timestamp: new Date().toLocaleString()
+      };
+
+      messages.push(newMessage);
+      localStorage.setItem('messages', JSON.stringify(messages));
+      
+      document.getElementById('messageText').value = '';
+      alert('Message sent successfully!');
+    }
+
+    function viewItem(itemId) {
+      window.location.href = `index.html?viewItem=${itemId}`;
+    }
+
+    function proposeSwap(itemId) {
+      window.location.href = `index.html?proposeSwap=${itemId}`;
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', loadCustomerProfile);
+  </script>
+</body>
+</html>

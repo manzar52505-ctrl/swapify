@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Wishlist - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="public/index.html">Home</a></li>
+        <li><a href="public/profile.html">Profile</a></li>
+        <li><a href="#" class="active">Wishlist</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="wishlist-container">
+    <div class="wishlist-header">
+      <h2>💖 My Wishlist</h2>
+      <p>Items you want to buy or swap for</p>
+    </div>
+    
+    <div class="wishlist-grid">
+      <div class="wishlist-item">
+        <img src="https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=200&h=150&fit=crop" alt="Laptop">
+        <div class="wishlist-info">
+          <h4>Gaming Laptop</h4>
+          <p class="price">$800</p>
+          <p class="seller">by TechStore</p>
+          <div class="wishlist-actions">
+            <button class="buy-btn">Buy Now</button>
+            <button class="swap-btn">Propose Swap</button>
+            <button onclick="removeFromWishlist(1)" class="remove-btn">Remove</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="wishlist-item">
+        <img src="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=200&h=150&fit=crop" alt="Phone">
+        <div class="wishlist-info">
+          <h4>Smartphone</h4>
+          <p class="price">$400</p>
+          <p class="seller">by MobileShop</p>
+          <div class="wishlist-actions">
+            <button class="buy-btn">Buy Now</button>
+            <button class="swap-btn">Propose Swap</button>
+            <button onclick="removeFromWishlist(2)" class="remove-btn">Remove</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function removeFromWishlist(itemId) {
+      if (confirm('Remove this item from your wishlist?')) {
+        event.target.closest('.wishlist-item').remove();
+        alert('Item removed from wishlist!');
+      }
+    }
+  </script>
+</body>
+</html>

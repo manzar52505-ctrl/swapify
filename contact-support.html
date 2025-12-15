@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Support - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="public/index.html">Home</a></li>
+        <li><a href="my-orders.html">My Orders</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="support-container">
+    <h2>Contact Support</h2>
+    <div class="support-form">
+      <div class="support-info">
+        <h3>Need Help?</h3>
+        <p>Our support team is here to help you 24/7</p>
+        <div class="contact-methods">
+          <p>📧 Email: support@swapshop.com</p>
+          <p>📞 Phone: 1-800-SWAP-123</p>
+          <p>💬 Live Chat: Available 9 AM - 6 PM</p>
+        </div>
+      </div>
+      
+      <form onsubmit="submitSupport(event)">
+        <h3>Send us a message</h3>
+        <input type="text" placeholder="Your Name" required>
+        <input type="email" placeholder="Your Email" required>
+        <select required>
+          <option value="">Select Issue Type</option>
+          <option>Order Issue</option>
+          <option>Payment Problem</option>
+          <option>Swap Dispute</option>
+          <option>Technical Issue</option>
+          <option>Other</option>
+        </select>
+        <input type="text" id="orderRef" placeholder="Order Number (if applicable)">
+        <textarea placeholder="Describe your issue..." rows="5" required></textarea>
+        <button type="submit" class="contact-btn">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    function submitSupport(event) {
+      event.preventDefault();
+      alert('Support ticket created! We will respond within 24 hours.');
+      window.location.href = 'support-success.html';
+    }
+    
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const orderId = params.get('order');
+      if (orderId) {
+        document.getElementById('orderRef').value = orderId;
+      }
+    }
+  </script>
+</body>
+</html>

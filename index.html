@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Swap & Shop — Professional</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background: linear-gradient(135deg, #667eea, #764ba2, #10b981, #f59e0b, #ef4444, #667eea) !important;
+      background-size: 300% 300% !important;
+      animation: gradientShift 15s ease infinite !important;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      25% { background-position: 100% 50%; }
+      50% { background-position: 100% 100%; }
+      75% { background-position: 0% 100%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    body.dark-mode {
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f172a, #1e293b, #374151, #1a1a2e) !important;
+      background-size: 300% 300% !important;
+      animation: gradientShift 15s ease infinite !important;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-row">
+      <div class="brand">
+        <div class="logo-circle">S</div>
+        <div class="brand-text">
+          <h1>Swap & Shop</h1>
+          <small>Buy • Sell • Swap</small>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <input id="globalSearch" class="search-input" placeholder="Search items, categories..." />
+        <select id="filterCategory" class="mini-select">
+          <option value="">All categories</option>
+          <option>Electronics</option>
+          <option>Clothes</option>
+          <option>Books</option>
+          <option>Other</option>
+        </select>
+        <button class="btn btn-primary" onclick="showAddItemModal()">Add Item</button>
+        <button class="btn" onclick="window.location.href='../wishlist.html'">Wishlist</button>
+        <button class="btn" onclick="toggleTheme()" id="themeToggle">🌙</button>
+        <a href="admin.html" class="btn" style="background: #ef4444; color: white;">Admin</a>
+        <a href="../profile-select.html" class="btn">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container main-area">
+
+    <section class="hero">
+      <div class="hero-left">
+        <h2>Swap smart. Shop happier.</h2>
+        <p>Discover local items for sale or propose a swap in seconds — secure, clean, and fast.</p>
+      </div>
+      <div class="hero-right">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&auto=format" alt="swap" />
+      </div>
+    </section>
+
+    <section class="filters">
+      <div class="filter-row">
+        <div class="filter-group">
+          <label>Price Range</label>
+          <div class="price-range">
+            <input type="range" id="priceMin" min="0" max="1000" value="0">
+            <input type="range" id="priceMax" min="0" max="1000" value="1000">
+            <div class="price-display">
+              <span>$<span id="minPrice">0</span> - $<span id="maxPrice">1000</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Location</label>
+          <select id="locationFilter">
+            <option value="">All locations</option>
+            <option value="New York">New York</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="Chicago">Chicago</option>
+            <option value="Houston">Houston</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Condition</label>
+          <select id="conditionFilter">
+            <option value="">All conditions</option>
+            <option value="New">New</option>
+            <option value="Like New">Like New</option>
+            <option value="Used">Used</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label>Date Posted</label>
+          <select id="dateFilter">
+            <option value="">Any time</option>
+            <option value="today">Today</option>
+            <option value="week">This week</option>
+            <option value="month">This month</option>
+          </select>
+        </div>
+        <button class="btn" onclick="clearFilters()">Clear</button>
+      </div>
+    </section>
+
+    <section class="featured">
+      <h3>Featured Items</h3>
+      <div id="itemsGrid" class="card-grid">
+        <!-- items injected by JS -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Add Item Modal -->
+  <div id="addItemModal" class="modal">
+    <div class="modal-card">
+      <h3>Add New Item</h3>
+      <form id="addItemForm">
+        <label>Item name</label>
+        <input id="add_name" required />
+        <label>Category</label>
+        <input id="add_category" required />
+        <label>Price (USD)</label>
+        <input id="add_price" type="number" min="0" />
+        <label>Description</label>
+        <textarea id="add_description"></textarea>
+        <label>Upload Image</label>
+        <div id="imageUploadArea" class="image-upload-area">
+          <div class="upload-placeholder">
+            <span>📷</span>
+            <p>Drag & drop image here or click to browse</p>
+            <input type="file" id="add_image" accept="image/*" multiple hidden>
+          </div>
+          <div id="imagePreviewContainer" class="image-preview-container"></div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn" onclick="closeAddItemModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Item Detail Modal -->
+  <div id="itemModal" class="modal">
+    <div class="modal-card modal-lg">
+      <button class="modal-close" onclick="closeItemModal()">✕</button>
+      <div id="itemDetailContent">
+        <!-- filled by JS -->
+      </div>
+      <div class="modal-actions">
+        <button class="btn" onclick="closeItemModal()">Close</button>
+        <button id="btnProposeSwap" class="btn btn-outline" onclick="showSwapModal()">Propose Swap</button>
+        <button id="btnBuyNow" class="btn btn-primary" onclick="buyNow()">Buy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Swap Modal -->
+  <div id="swapModal" class="modal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeSwapModal()">✕</button>
+      <h3>Propose Swap</h3>
+      <p id="swapTargetText"></p>
+      <label>Your item to offer</label>
+      <select id="yourItemsSelect"></select>
+      <label>Optional message</label>
+      <textarea id="swapMessage" placeholder="Why this is a good swap..."></textarea>
+      <div class="modal-actions">
+        <button class="btn" onclick="closeSwapModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitSwap()">Send Proposal</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+  
+  <!-- Notification Dropdown -->
+  <div id="notificationDropdown" class="notification-dropdown">
+    <div class="notification-header">Notifications</div>
+    <div id="notificationList"></div>
+  </div>
+
+  <!-- Notification Dropdown -->
+  <div id="notificationDropdown" class="notification-dropdown" style="display: none;">
+    <div class="notification-header">
+      <h4>Notifications</h4>
+      <button onclick="clearAllNotifications()" class="clear-btn">Clear All</button>
+    </div>
+    <div id="notificationList" class="notification-list">
+      <div class="no-notifications">No new notifications</div>
+    </div>
+  </div>
+
+  <!-- Floating Chat Icon -->
+  <div id="chatIcon" class="chat-icon" onclick="toggleChat()">
+    <div class="icon-content">
+      🤖
+    </div>
+  </div>
+
+  <!-- Chatbot -->
+  <div id="chatbot" class="chatbot">
+    <div class="chat-header">
+      <div class="chat-title">
+        <div class="bot-avatar">🤖</div>
+        <div>
+          <div class="bot-name">Swapy Assistant</div>
+          <div class="bot-status">• Online</div>
+        </div>
+      </div>
+      <span id="chatClose" onclick="toggleChat()">✕</span>
+    </div>
+    <div id="chatBody" class="chat-body">
+      <div id="chatMessages" class="chat-messages">
+        <div class="bot-message">
+          <div class="message-avatar">🤖</div>
+          <div class="message-content">
+            <div class="message-text">Welcome to Swap&Shop! I'm here to help you with swapping, buying, and platform guidance. What can I assist you with?</div>
+            <div class="message-time">Just now</div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input">
+        <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatEnter(event)">
+        <button onclick="sendMessage()">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>tml'" style="padding: 15px 30px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 25px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">Contact with us</button>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    function toggleTheme() {
+      document.body.style.background = document.body.style.background === 'black' ? '' : 'black';
+      document.body.style.color = document.body.style.color === 'white' ? '' : 'white';
+      const btn = document.getElementById('themeToggle');
+      btn.innerHTML = btn.innerHTML === '🌙' ? '☀️' : '🌙';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iPhone 13 Pro - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="public/index.html">Home</a></li>
+        <li><a href="public/profile.html">Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="item-detail-container">
+    <div class="item-images">
+      <div class="thumbnail-column">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400" alt="iPhone front" class="small">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400" alt="iPhone back" class="small">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=400" alt="iPhone side" class="small">
+        <img onclick="toggleImageSize(this)" src="https://images.unsplash.com/photo-1556656793-08538906a9f8?w=400" alt="iPhone box" class="small">
+      </div>
+    </div>
+
+    <div class="item-info">
+      <h2>iPhone 13 Pro</h2>
+      <p><strong>Category:</strong> Electronics</p>
+      <p><strong>Description:</strong> Excellent condition, barely used iPhone 13 Pro with original box and accessories. 128GB storage, unlocked.</p>
+      <p><strong>Price:</strong> $899</p>
+
+      <div class="actions">
+        <button onclick="buyNow()" class="buy-btn">Buy Now</button>
+        <button onclick="proposeSwap()" class="swap-btn">Propose Swap</button>
+        <button onclick="contactSeller()" class="contact-btn">Contact Seller</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleImageSize(img) {
+      if (img.classList.contains('small')) {
+        document.querySelectorAll('.thumbnail-column img').forEach(image => {
+          image.classList.remove('large');
+          image.classList.add('small');
+        });
+        img.classList.remove('small');
+        img.classList.add('large');
+      } else {
+        img.classList.remove('large');
+        img.classList.add('small');
+      }
+    }
+
+    function buyNow() {
+      window.location.href = 'payment.html?item=iPhone 13 Pro';
+    }
+
+    function proposeSwap() {
+      window.location.href = 'swap-proposal.html';
+    }
+
+    function contactSeller() {
+      window.location.href = 'contact-seller.html';
+    }
+  </script>
+</body>
+</html>

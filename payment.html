@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment - Swap&Shop</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="itemdetail.html">Back to Item</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="payment-container">
+    <h2>Complete Your Purchase</h2>
+    <div class="payment-form">
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+        <p><strong>Item:</strong> <span id="orderItem">Old Laptop</span></p>
+        <p><strong>Price:</strong> <span id="orderPrice">$120</span></p>
+        <p><strong>Total:</strong> <span id="orderTotal">$120</span></p>
+      </div>
+      
+      <form onsubmit="processPayment(event)">
+        <h3>Payment Details</h3>
+        <input type="text" placeholder="Card Number" required>
+        <input type="text" placeholder="Cardholder Name" required>
+        <div style="display: flex; gap: 1rem;">
+          <input type="text" placeholder="MM/YY" required>
+          <input type="text" placeholder="CVV" required>
+        </div>
+        <button type="submit" class="buy-btn">Complete Purchase</button>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    function processPayment(event) {
+      event.preventDefault();
+      alert('Payment successful! Order confirmed.');
+      window.location.href = 'order-success.html';
+    }
+    
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const item = params.get('item');
+      if (item) {
+        document.getElementById('orderItem').innerText = item;
+      }
+    }
+  </script>
+</body>
+</html>

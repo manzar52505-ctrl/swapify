@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Messages - Swap&Shop</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav>
+      <h2 class="logo">Swap&Shop</h2>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="additem.html">Add Item</a></li>
+        <li><a href="profile.html">Profile</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Messages Section -->
+  <section class="messages-main">
+    <div class="messages-header">
+      <h2>💬 My Messages</h2>
+      <p>Stay connected with buyers and sellers</p>
+    </div>
+    
+    <div class="messages-layout">
+      <div class="conversations-list">
+        <h3>Recent Conversations</h3>
+        <div class="conversation-item active" onclick="selectConversation('alice')">
+          <div class="avatar">A</div>
+          <div class="conversation-info">
+            <h4>Alice Johnson</h4>
+            <p>About: Old Laptop</p>
+            <span class="time">2 min ago</span>
+          </div>
+          <div class="unread-badge">2</div>
+        </div>
+        
+        <div class="conversation-item" onclick="selectConversation('bob')">
+          <div class="avatar">B</div>
+          <div class="conversation-info">
+            <h4>Bob Smith</h4>
+            <p>About: Gaming Mouse</p>
+            <span class="time">1 hour ago</span>
+          </div>
+        </div>
+        
+        <div class="conversation-item" onclick="selectConversation('charlie')">
+          <div class="avatar">C</div>
+          <div class="conversation-info">
+            <h4>Charlie Brown</h4>
+            <p>About: Headphones</p>
+            <span class="time">Yesterday</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-area">
+        <div class="chat-header">
+          <div class="chat-user">
+            <div class="avatar">A</div>
+            <div>
+              <h4 id="chatUserName">Alice Johnson</h4>
+              <p id="chatItemName">Discussing: Old Laptop</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="chat-messages" id="chatMessages">
+          <div class="message received">
+            <p>Hi! Is the laptop still available?</p>
+            <span class="message-time">10:30 AM</span>
+          </div>
+          <div class="message sent">
+            <p>Yes, it is! Are you interested in buying or swapping?</p>
+            <span class="message-time">10:32 AM</span>
+          </div>
+          <div class="message received">
+            <p>I'd love to swap it for my gaming keyboard. It's worth about the same.</p>
+            <span class="message-time">10:35 AM</span>
+          </div>
+        </div>
+        
+        <div class="chat-input-area">
+          <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleEnter(event)">
+          <button onclick="sendMessage()" class="send-btn">Send</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    function selectConversation(user) {
+      document.querySelectorAll('.conversation-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      event.target.closest('.conversation-item').classList.add('active');
+      
+      const users = {
+        alice: { name: 'Alice Johnson', item: 'Old Laptop' },
+        bob: { name: 'Bob Smith', item: 'Gaming Mouse' },
+        charlie: { name: 'Charlie Brown', item: 'Headphones' }
+      };
+      
+      document.getElementById('chatUserName').innerText = users[user].name;
+      document.getElementById('chatItemName').innerText = 'Discussing: ' + users[user].item;
+    }
+    
+    function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const message = input.value.trim();
+      
+      if (message) {
+        const chatMessages = document.getElementById('chatMessages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message sent';
+        messageDiv.innerHTML = `<p>${message}</p><span class="message-time">Now</span>`;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+        input.value = '';
+      }
+    }
+    
+    function handleEnter(event) {
+      if (event.key === 'Enter') {
+        sendMessage();
+      }
+    }
+  </script>
+
+</body>
+</html>
+
