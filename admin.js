@@ -1,147 +1,177 @@
-// Admin Panel JavaScript
-let users = JSON.parse(localStorage.getItem('users')) || [
-  { id: 1, username: 'JohnDoe', email: 'john@example.com', contact: '+123456789' },
-  { id: 2, username: 'JaneDoe', email: 'jane@example.com', contact: '+987654321' }
-];
-
-let items = JSON.parse(localStorage.getItem('items')) || [
-  { id: 1, name: 'Old Phone', category: 'Electronics', price: 50, status: 'Available', owner: 'JohnDoe' },
-  { id: 2, name: 'T-Shirt', category: 'Clothes', price: 25, status: 'Available', owner: 'JaneDoe' }
-];
-
-let swaps = JSON.parse(localStorage.getItem('swaps')) || [
-  { id: 1, proposer: 'JaneDoe', itemOffered: 'T-Shirt', requestedItem: 'Old Phone', status: 'Pending' }
-];
-
-let messages = JSON.parse(localStorage.getItem('messages')) || [
-  { id: 1, sender: 'JohnDoe', receiver: 'JaneDoe', message: 'Hello, is your item available?', timestamp: '2025-01-02 10:15' }
-];
-
-function loadUsers() {
-  const tbody = document.getElementById('usersTable');
-  tbody.innerHTML = users.map(user => `
-    <tr>
-      <td>${user.id}</td>
-      <td>${user.username}</td>
-      <td>${user.email}</td>
-      <td>${user.contact}</td>
-      <td>
-        <button class="btn btn-sm" onclick="editUser(${user.id})">Edit</button>
-        <button class="btn btn-sm btn-danger" onclick="deleteUser(${user.id})">Delete</button>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function loadItems() {
-  const tbody = document.getElementById('itemsTable');
-  tbody.innerHTML = items.map(item => `
-    <tr>
-      <td>${item.id}</td>
-      <td>${item.name}</td>
-      <td>${item.category}</td>
-      <td>$${item.price}</td>
-      <td>${item.status}</td>
-      <td>
-        <button class="btn btn-sm" onclick="editItem(${item.id})">Edit</button>
-        <button class="btn btn-sm btn-danger" onclick="deleteItem(${item.id})">Delete</button>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function loadSwaps() {
-  const tbody = document.getElementById('swapsTable');
-  tbody.innerHTML = swaps.map(swap => `
-    <tr>
-      <td>${swap.id}</td>
-      <td>${swap.proposer}</td>
-      <td>${swap.itemOffered}</td>
-      <td>${swap.requestedItem}</td>
-      <td>${swap.status}</td>
-      <td>
-        <button class="btn btn-sm btn-success" onclick="acceptSwap(${swap.id})">Accept</button>
-        <button class="btn btn-sm btn-danger" onclick="rejectSwap(${swap.id})">Reject</button>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function loadMessages() {
-  const tbody = document.getElementById('messagesTable');
-  tbody.innerHTML = messages.map(msg => `
-    <tr>
-      <td>${msg.id}</td>
-      <td>${msg.sender}</td>
-      <td>${msg.receiver}</td>
-      <td>${msg.message}</td>
-      <td>${msg.timestamp}</td>
-      <td>
-        <button class="btn btn-sm btn-danger" onclick="deleteMessage(${msg.id})">Delete</button>
-      </td>
-    </tr>
-  `).join('');
-}
-
-function acceptSwap(id) {
-  const swap = swaps.find(s => s.id === id);
-  if (swap) {
-    swap.status = 'Accepted';
-    localStorage.setItem('swaps', JSON.stringify(swaps));
-    loadSwaps();
-    showToast('Swap accepted!');
+// Delete row
+function deleteRow(button) {
+    const row = button.parentElement.parentElement;
+    row.remove();
+    alert("Row deleted successfully!");
   }
-}
-
-function rejectSwap(id) {
-  const swap = swaps.find(s => s.id === id);
-  if (swap) {
-    swap.status = 'Rejected';
-    localStorage.setItem('swaps', JSON.stringify(swaps));
-    loadSwaps();
-    showToast('Swap rejected!');
+  
+  // Edit row
+  function editRow(button) {
+    const row = button.parentElement.parentElement;
+    const cells = row.querySelectorAll("td");
+  
+    for (let i = 1; i < cells.length - 1; i++) { // skip ID and Actions
+      const currentText = cells[i].textContent;
+      const input = document.createElement("input");
+      input.value = currentText;
+      cells[i].textContent = "";
+      cells[i].appendChild(input);
+    }
+  
+    // Change buttons to Save / Cancel
+    const actionCell = cells[cells.length - 1];
+    actionCell.innerHTML = `
+      <button onclick="saveRow(this)">Save</button>
+      <button onclick="cancelEdit(this)">Cancel</button>
+    `;
   }
-}
-
-function deleteUser(id) {
-  if (confirm('Delete this user?')) {
-    users = users.filter(u => u.id !== id);
-    localStorage.setItem('users', JSON.stringify(users));
-    loadUsers();
-    showToast('User deleted!');
+  
+  // Save row after edit
+  function saveRow(button) {
+    const row = button.parentElement.parentElement;
+    const cells = row.querySelectorAll("td");
+  
+    for (let i = 1; i < cells.length - 1; i++) { // skip ID and Actions
+      const input = cells[i].querySelector("input");
+      cells[i].textContent = input.value;
+    }
+  
+    // Restore Edit/Delete buttons
+    const actionCell = cells[cells.length - 1];
+    actionCell.innerHTML = `
+      <button onclick="editRow(this)">Edit</button>
+      <button onclick="deleteRow(this)">Delete</button>
+    `;
   }
-}
-
-function deleteItem(id) {
-  if (confirm('Delete this item?')) {
-    items = items.filter(i => i.id !== id);
-    localStorage.setItem('items', JSON.stringify(items));
-    loadItems();
-    showToast('Item deleted!');
+  
+  // Cancel edit
+  function cancelEdit(button) {
+    const row = button.parentElement.parentElement;
+    const cells = row.querySelectorAll("td");
+  
+    for (let i = 1; i < cells.length - 1; i++) { // skip ID and Actions
+      const input = cells[i].querySelector("input");
+      cells[i].textContent = input.defaultValue;
+    }
+  
+    // Restore Edit/Delete buttons
+    const actionCell = cells[cells.length - 1];
+    actionCell.innerHTML = `
+      <button onclick="editRow(this)">Edit</button>
+      <button onclick="deleteRow(this)">Delete</button>
+    `;
   }
-}
 
-function deleteMessage(id) {
-  if (confirm('Delete this message?')) {
-    messages = messages.filter(m => m.id !== id);
-    localStorage.setItem('messages', JSON.stringify(messages));
-    loadMessages();
-    showToast('Message deleted!');
+  // Accept swap
+function acceptSwap(button) {
+    const row = button.parentElement.parentElement;
+    row.querySelector("td:nth-child(5)").textContent = "Accepted"; // update Status
+    alert("Swap accepted!");
   }
-}
+  
+  // Reject swap
+  function rejectSwap(button) {
+    const row = button.parentElement.parentElement;
+    row.querySelector("td:nth-child(5)").textContent = "Rejected"; // update Status
+    alert("Swap rejected!");
+  }
 
-function showToast(message) {
-  const toast = document.createElement('div');
-  toast.className = 'toast show';
-  toast.textContent = message;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3000);
-}
+  // Delete a message
+function deleteMessage(button) {
+    const row = button.parentElement.parentElement;
+    row.remove();
+    alert("Message deleted successfully!");
+  }
 
-// Initialize
-document.addEventListener('DOMContentLoaded', function() {
-  loadUsers();
-  loadItems();
-  loadSwaps();
-  loadMessages();
-});
+  
+  // ----------------- Users & Items Edit/Delete -----------------
+
+// Delete row
+function deleteRow(button) {
+    const row = button.parentElement.parentElement;
+    row.remove();
+    alert("Row deleted successfully!");
+  }
+  
+  // Edit row
+  function editRow(button) {
+    const row = button.parentElement.parentElement;
+    const cells = row.querySelectorAll("td");
+  
+    for (let i = 1; i < cells.length - 1; i++) { // skip ID and Actions
+      const currentText = cells[i].textContent;
+      const input = document.createElement("input");
+      input.value = currentText;
+      cells[i].textContent = "";
+      cells[i].appendChild(input);
+    }
+  
+    // Change buttons to Save / Cancel
+    const actionCell = cells[cells.length - 1];
+    actionCell.innerHTML = `
+      <button onclick="saveRow(this)">Save</button>
+      <button onclick="cancelEdit(this)">Cancel</button>
+    `;
+  }
+  
+  // Save row after edit
+  function saveRow(button) {
+    const row = button.parentElement.parentElement;
+    const cells = row.querySelectorAll("td");
+  
+    for (let i = 1; i < cells.length - 1; i++) {
+      const input = cells[i].querySelector("input");
+      cells[i].textContent = input.value;
+    }
+  
+    // Restore Edit/Delete buttons
+    const actionCell = cells[cells.length - 1];
+    actionCell.innerHTML = `
+      <button onclick="editRow(this)">Edit</button>
+      <button onclick="deleteRow(this)">Delete</button>
+    `;
+  }
+  
+  // Cancel edit
+  function cancelEdit(button) {
+    const row = button.parentElement.parentElement;
+    const cells = row.querySelectorAll("td");
+  
+    for (let i = 1; i < cells.length - 1; i++) {
+      const input = cells[i].querySelector("input");
+      cells[i].textContent = input.defaultValue;
+    }
+  
+    // Restore Edit/Delete buttons
+    const actionCell = cells[cells.length - 1];
+    actionCell.innerHTML = `
+      <button onclick="editRow(this)">Edit</button>
+      <button onclick="deleteRow(this)">Delete</button>
+    `;
+  }
+  
+  // ----------------- Swap Requests -----------------
+  
+  // Accept swap
+  function acceptSwap(button) {
+    const row = button.parentElement.parentElement;
+    row.querySelector("td:nth-child(5)").textContent = "Accepted"; // Status
+    alert("Swap accepted!");
+  }
+  
+  // Reject swap
+  function rejectSwap(button) {
+    const row = button.parentElement.parentElement;
+    row.querySelector("td:nth-child(5)").textContent = "Rejected"; // Status
+    alert("Swap rejected!");
+  }
+  
+  // ----------------- Messages -----------------
+  
+  // Delete a message
+  function deleteMessage(button) {
+    const row = button.parentElement.parentElement;
+    row.remove();
+    alert("Message deleted successfully!");
+  }
+  
